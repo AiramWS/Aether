@@ -1,8 +1,4 @@
-import React from 'react'
-
-type Props = {}
-
-const AccesibilitySettings = (props: Props) => {
+const AccesibilitySettings = () => {
   return (
     <div>POR IMPLEMENTAR</div>
   )

@@ -1,11 +1,7 @@
-import React from 'react'
 import Temas from '../../../assets/Help/Temas.png';
 import TemasDos from '../../../assets/Help/Temas2.png';
 
-
-type Props = {}
-
-const Personalizacion = (props: Props) => {
+const Personalizacion = () => {
   return (
     <div>
         <p>

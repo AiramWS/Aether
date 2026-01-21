@@ -1,11 +1,7 @@
-import React from 'react'
 import './HelpPages.css';
-import Registro from './Registro';
 import Registro01 from '../../../assets/Help/Sesión.png';
 
-type Props = {}
-
-const InicioSesión = (props: Props) => {
+const InicioSesión = () => {
   return (
     <div>
         <p>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import HomeButton from '../Buttons/Button';
 import './Help.css';
 import '../Buttons/Button.css'
@@ -9,9 +9,8 @@ import Configuration from './HelpPages/Configuration';
 import User from './HelpPages/User';
 import Personalizacion from './HelpPages/Personalizacion';
 
-type Props = {}
 
-const Help = (props: Props) => {
+const Help = () => {
 const [activeTab, setActiveTab] = useState<'register' | 'login' | 'settings' | 'user' | 'personalization' | 'accessibility'>();
 
   const renderContent = () => {

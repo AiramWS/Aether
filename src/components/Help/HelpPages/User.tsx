@@ -1,15 +1,10 @@
-import React from 'react'
 import './HelpPages.css';
 import Configuracion from '../../../assets/Help/ConfImagen.png';
 import Imagen from '../../../assets/Help/User.png';
 import Username from '../../../assets/Help/Username.png';
 import Autoguardado from '../../../assets/Help/Autoguardado.png';
 
-
-
-type Props = {}
-
-const User = (props: Props) => {
+const User = () => {
   return (
     <div>
         <p style={{paddingTop: '700px'}}>
