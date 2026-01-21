@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { faBook, faBookBookmark, faCircleQuestion, faFileZipper, faFolderOpen, faGear, faHomeLg, faPlus, faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import SettingsPage from './Settings';
 import HomeButton from '../Buttons/Button';
-import { ElectronAPI } from '../../electron';
 
 interface ElectronAPI {
     openMainWindow: () => void;
