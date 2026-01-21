@@ -1,17 +1,6 @@
 export type ThemeType = 'aether' | 'claro' | 'oscuro';
 
 export const themeConfig = {
-  aether: {
-    name: 'Aether', /* DESCONTINUADO PORQUE NO SÉ DISEÑAR PALETAS DE COLORES. DE VERDAD LO INTENTÉ */
-    description: 'Tema claro rosado',
-    gradient: 'linear-gradient(135deg, #FAF7F9 0%, #E2BBBC 50%, #9C4A5A 100%)',
-    colors: {
-      base: '#FAF7F9',
-      text: '#1A1A1A',
-      primary: '#E2BBBC',
-      secondary: '#5B293B',
-    }
-  },
   claro: {
     name: 'Claro',
     description: 'Tema claro neutro',
@@ -40,7 +29,7 @@ export const themeConfig = {
 export const applyTheme = (theme: ThemeType) => {
   const body = document.body;
   
-  body.classList.remove('theme-aether', 'theme-claro', 'theme-oscuro');
+  body.classList.remove('theme-claro', 'theme-oscuro');
   
   body.classList.add(`theme-${theme}`);
   localStorage.setItem('app-theme', theme);
@@ -51,11 +40,11 @@ export const applyTheme = (theme: ThemeType) => {
 export const loadTheme = (): ThemeType => {
   const saved = localStorage.getItem('app-theme') as ThemeType;
   
-  if (saved && ['aether', 'claro', 'oscuro'].includes(saved)) {
+  if (saved && ['claro', 'oscuro'].includes(saved)) {
     applyTheme(saved);
     return saved;
   }
 
-  applyTheme('aether');
-  return 'aether';
+  applyTheme('oscuro');
+  return 'oscuro';
 };

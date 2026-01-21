@@ -9,7 +9,6 @@ import Help from './components/Help/Help';
 
 function App() {
   useEffect(() => {
-    // Cargar el tema guardado al iniciar la aplicación
     loadTheme();
   }, []);
 
