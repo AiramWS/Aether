@@ -46,7 +46,7 @@ function createMainWindow() {
     },
   })
 
-    mainWindow.maximize()
+    mainWindow.maximize();
 
   if (VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(VITE_DEV_SERVER_URL + '#/homepage')
@@ -63,6 +63,11 @@ function createMainWindow() {
 }
 
 function createHelpWindow() {
+  if (helpWindow) {
+    helpWindow.focus();
+    return;
+  }
+
   helpWindow = new BrowserWindow({
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
       width: 1200,
@@ -78,8 +83,6 @@ function createHelpWindow() {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-    helpWindow.maximize;
-  
     if (VITE_DEV_SERVER_URL) {
       helpWindow.loadURL(VITE_DEV_SERVER_URL + '#/help')
     } else {

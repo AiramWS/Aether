@@ -11,7 +11,7 @@ type ButtonProps = {
 
 const HomeButton = (props: ButtonProps) => {
     return (
-      <button className='home-button' id={props.buttonId} onClick={props.onClick}>
+      <button className='button' id={props.buttonId} onClick={props.onClick}>
         <FontAwesomeIcon icon={props.icon} className='button-icon'/>
         <p>{props.buttonText}</p>
       </button>

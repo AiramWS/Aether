@@ -5,12 +5,11 @@ import { applyTheme, loadTheme, themeConfig, ThemeType } from '../../utils/theme
 type Props = {}
 
 const PreferencesSettings = (props: Props) => {
-  const [currentTheme, setCurrentTheme] = useState<ThemeType>('aether');
+  const [currentTheme, setCurrentTheme] = useState<ThemeType>(() => {
+    return loadTheme();
+  });
 
-  useEffect(() => {
-    const savedTheme = loadTheme();
-    setCurrentTheme(savedTheme);
-  }, []);
+  const currentThemeConfig = themeConfig[currentTheme] || themeConfig.oscuro;
 
   const handleThemeChange = (theme: ThemeType) => {
     setCurrentTheme(theme);

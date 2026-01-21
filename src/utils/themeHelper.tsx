@@ -1,4 +1,4 @@
-export type ThemeType = 'aether' | 'claro' | 'oscuro';
+export type ThemeType = 'claro' | 'oscuro';
 
 export const themeConfig = {
   claro: {

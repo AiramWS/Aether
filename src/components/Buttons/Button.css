@@ -1,0 +1,33 @@
+.button {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    margin-top: 2.5%;
+    width: 90%;
+    height: 5%;
+    min-height: 35px;
+
+    background-color: var(--color-base);  
+    color: var(--color-text);
+
+    border: none;
+    border-radius: 10px;
+
+    transition: all ease-in-out 0.15s;
+}
+
+.button p {
+    font-size: 90%;
+    font-weight: bold;
+}
+
+.button:hover {
+    background-color: var(--color-surface);
+    cursor: pointer;
+}
+
+.button-icon {
+    font-size: 150%;
+    margin: 0 2.5%;
+}

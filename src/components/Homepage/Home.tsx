@@ -1,8 +1,9 @@
 import './Home.css';
 import './Settings.css'
+import '../Buttons/Button.css'
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { faBook, faBookBookmark, faCircleQuestion, faFileZipper, faFolderOpen, faGear, faHomeLg, faPlus, faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faCircleQuestion, faGear, faHomeLg, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import SettingsPage from './Settings';
 import HomeButton from '../Buttons/Button';
 
@@ -19,7 +20,7 @@ declare global {
 
 type Props = {}
 
-type Proyect = {
+type Project = {
   name: string,
   bookmarks: number
 }
