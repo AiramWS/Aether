@@ -4,7 +4,7 @@ type Props = {}
 
 const AccesibilitySettings = (props: Props) => {
   return (
-    <div>WORK IN PROGRESS</div>
+    <div>POR IMPLEMENTAR</div>
   )
 }
 

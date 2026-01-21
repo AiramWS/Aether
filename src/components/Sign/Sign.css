@@ -121,6 +121,8 @@
 
     position: fixed;
     right: 1.5%;
+
+    position: absolute;
 }
 
 
@@ -208,4 +210,24 @@
     transform: scale(0.98) translateY(1px);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     
+}
+
+.help-button {
+    background-color: var(--color-accent);
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    width: 30px;
+    border: none;
+
+    color: black;
+
+    position: relative;
+    top: 27%;
+    left: 43%;
+    font-weight: bold;
+}
+
+.help-button:hover {
+    background-color: var(--color-accent);
+    opacity: 0.8;
 }

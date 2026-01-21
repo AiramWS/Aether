@@ -57,6 +57,7 @@ const Sign = (props: Props) => {
     }
 
     const handleSignIn = async () => {
+        handleOpenMainWindow();
         try {
             const { data, error } = await supabase.auth.signInWithPassword({
                 email: loginEmail,
@@ -242,6 +243,7 @@ const Sign = (props: Props) => {
                 {
                     isMoved ? <h2>¡Bienvenido! ¿Estás listo para <span>crear</span>?</h2> : <h2>¡Me alegra verte!</h2>
                 }
+                <button className='help-button' onClick={window.electronAPI?.openHelpWindow}>?</button>
             </div>
         </div>
     )
