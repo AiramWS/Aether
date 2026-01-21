@@ -1,0 +1,22 @@
+main, body, html, #root {
+    background-color: var(--color-base);
+    position: relative;
+}
+
+.back-button {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    height: 2%;
+}
+
+.paper {
+    height: 80%;
+    aspect-ratio: 1/1.5;
+    background-color: var(--color-base);
+    transform: translate(50%, 50%);
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}

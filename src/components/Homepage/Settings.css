@@ -1,0 +1,81 @@
+.settings {
+    position: absolute;
+    z-index: 10;
+
+    height: 100vh;
+    width: 100vw;
+
+    display: flex;
+
+    animation: fadeIn 0.3s ease;
+}
+
+.backdrop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+    width: 100%;
+
+    background-color: rgba(0, 0, 0, 0.8);
+
+    animation: backdropFadeIn 0.3s ease;
+}
+
+.settings-frame {
+    display: flex;
+    height: 70%;
+    aspect-ratio: 3/1.7;
+
+    background-color: var(--color-background);
+    border-radius: 15px;
+
+    animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    transform-origin: center center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes backdropFadeIn {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Settings Panel Content */
+.switch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 230px;
+  height: 100%;
+
+  background-color: var(--color-background);
+  border-bottom-left-radius: 13px;
+  border-top-left-radius: 13px;
+}
+
+.display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1;
+  height: 100%;
+
+  background-color: var(--color-base);
+  border-bottom-right-radius: 13px;
+  border-top-right-radius: 13px;
+}

@@ -1,0 +1,53 @@
+.theme-claro {
+/* Colores base - estándar industria */
+  --color-base: #FAF7F9;
+  --color-background: #faf8fa;
+  --color-surface: #e0d5de;
+  
+  /* Texto - estándar para modo claro */
+  --color-text: #212529;
+  --color-text-secondary: #FAF7F9;
+
+  /* Colores primarios - rosa claro */
+  --color-primary: #f48fb1;      
+  --color-secondary: #f06292;   
+  --color-secondary-hover: #ec407a;
+  
+  /* Acentuación - rosa coral */
+  --color-accent: #ff80ab;  
+  
+  /* Bordes - gris estándar */
+  --color-border: #212529;
+}
+
+.theme-oscuro {
+  /* Colores base - estándar industria */
+  --color-base: #121212;
+  --color-background: #1e1e1e;
+  --color-surface: #2d2d2d;
+  
+  /* Texto - estándar para modo oscuro */
+  --color-text: #e0e0e0;
+  --color-text-secondary: #242424;
+  
+  /* Colores primarios - verde bosque natural */
+  --color-primary: #4caf50;       
+  --color-secondary: #2e7d32;   
+  --color-secondary-hover: #388e3c;
+  
+  /* Acentuación - verde lima natural */
+  --color-accent: #81c784;    
+  
+  /* Bordes - gris estándar */
+  --color-border: #424242;
+}
+
+html, body, :root, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-base);
+  color: var(--color-text);
+  box-sizing: border-box;
+}
