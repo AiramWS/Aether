@@ -63,9 +63,13 @@ function createMainWindow() {
 }
 
 function createHelpWindow() {
-  if (helpWindow) {
+  if (helpWindow && !helpWindow.isDestroyed()) {
     helpWindow.focus();
     return;
+  }
+
+  if (helpWindow && helpWindow.isDestroyed()) {
+    helpWindow = null;
   }
 
   helpWindow = new BrowserWindow({

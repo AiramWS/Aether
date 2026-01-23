@@ -472,3 +472,36 @@
 .radio-label:nth-child(2):hover {
   border-color: var(--color-primary);
 }
+
+.toolkit {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+}
+
+.toolkit:hover {
+  cursor:help;
+}
+
+.toolkit:hover .extra-info {
+  opacity: 1;
+}
+
+.extra-info {
+  font-size: small;
+  width: 300px;
+
+  position: absolute;
+  top: 42%;
+  left: 59%;
+
+  border: dashed var(--color-secondary) 1px;
+  border-radius: 15px;
+  opacity: 0;
+  cursor: default;
+  transition: all 0.5s;
+}
+
+.extra-info span {
+  font-weight: bold;
+  color: var(--color-secondary);
+}

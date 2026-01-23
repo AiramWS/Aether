@@ -42,9 +42,12 @@ function createMainWindow() {
   });
 }
 function createHelpWindow() {
-  if (helpWindow) {
+  if (helpWindow && !helpWindow.isDestroyed()) {
     helpWindow.focus();
     return;
+  }
+  if (helpWindow && helpWindow.isDestroyed()) {
+    helpWindow = null;
   }
   helpWindow = new BrowserWindow({
     icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),

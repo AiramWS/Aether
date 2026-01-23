@@ -300,7 +300,8 @@ const saveChanges = () => {
         </div>
 
         <div className='form-field compact'>
-          <label>Autoguardado cada:</label>
+          <label><span className='toolkit'>Autoguardado cada:<p className='extra-info'>Intervalo de tiempo en el que el progreso de tú proyecto se guarda de manera automática. <span>(No implementado)</span></p></span></label>
+          
           <div className='radio-group'>
             <label className='radio-label'>
               <input
