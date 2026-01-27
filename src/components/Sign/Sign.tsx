@@ -57,7 +57,6 @@ const Sign = (props: Props) => {
     }
 
     const handleSignIn = async () => {
-        handleOpenMainWindow();
         try {
             const { data, error } = await supabase.auth.signInWithPassword({
                 email: loginEmail,
@@ -130,7 +129,7 @@ const Sign = (props: Props) => {
 
     const handleSignUp = async () => {
         if (registerPassword !== validatePassowrd) {
-            alert('Eeee');
+            alert('Las contraseñas no coinciden');
             return
         }
         try {
