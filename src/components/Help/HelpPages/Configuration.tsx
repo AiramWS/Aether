@@ -1,4 +1,3 @@
-import React from 'react'
 import './HelpPages.css';
 import ConfButton from '../../../assets/Help/ConfButton.png';
 import Configuracion from '../../../assets/Help/Configuracion.png';
