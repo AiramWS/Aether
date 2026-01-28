@@ -1,24 +1,14 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
-import { ipcMain } from 'electron';
+import fs from 'fs'
 import path from 'node:path'
 
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-// The built directory structure
-//
-// ├─┬─┬ dist
-// │ │ └── index.html
-// │ │
-// │ ├─┬ dist-electron
-// │ │ ├── main.js
-// │ │ └── preload.mjs
-// │
 process.env.APP_ROOT = path.join(__dirname, '..')
 
-// 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
 export const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL']
 export const MAIN_DIST = path.join(process.env.APP_ROOT, 'dist-electron')
 export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
@@ -29,11 +19,62 @@ let loginWindow: BrowserWindow | null
 let mainWindow: BrowserWindow | null
 let helpWindow: BrowserWindow | null
 
+// Handler para generar PDF
+ipcMain.on('generate-pdf', async (event, html: string) => {
+  try {
+    console.log('Generando PDF...')
+    
+    // Crear ventana oculta
+    const win = new BrowserWindow({ 
+      show: false,
+      webPreferences: {
+        nodeIntegration: false,
+        contextIsolation: true
+      }
+    })
+    
+    // Cargar el HTML en data URL
+    await win.loadURL(`data:text/html;charset=UTF-8,${encodeURIComponent(html)}`)
+    
+    // Esperar a que se cargue el contenido
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    
+    // Generar PDF
+    const pdfBuffer = await win.webContents.printToPDF({
+      printBackground: true,
+      landscape: false,
+      pageSize: 'A4'
+    })
+    
+    // Guardar archivo
+    const desktopPath = app.getPath('desktop')
+    const fileName = `informe_usuario_${Date.now()}.pdf`
+    const filePath = path.join(desktopPath, fileName)
+    
+    fs.writeFileSync(filePath, pdfBuffer)
+    
+    console.log('PDF guardado en:', filePath)
+    
+    // Abrir el archivo
+    shell.openPath(filePath)
+    
+    // Cerrar ventana temporal
+    win.close()
+    
+    // Notificar al renderer que se completó
+    event.reply('pdf-generated', { success: true, filePath })
+    
+  } catch (error) {
+    console.error('Error generando PDF:', error)
+  }
+})
+
+// Resto de tu código de ventanas...
 function createMainWindow() {
   mainWindow = new BrowserWindow({
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
-      width: 1200,
-      height: 800,
+    width: 1200,
+    height: 800,
     minWidth: 1000,
     minHeight: 700,
     resizable: true,
@@ -42,11 +83,13 @@ function createMainWindow() {
     fullscreenable: true,
     titleBarStyle: 'default',
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'preload.js'), // Asegúrate que apunte al compilado
+      contextIsolation: true,
+      nodeIntegration: false
     },
   })
 
-    mainWindow.maximize();
+  mainWindow.maximize()
 
   if (VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(VITE_DEV_SERVER_URL + '#/homepage')
@@ -64,18 +107,18 @@ function createMainWindow() {
 
 function createHelpWindow() {
   if (helpWindow && !helpWindow.isDestroyed()) {
-    helpWindow.focus();
-    return;
+    helpWindow.focus()
+    return
   }
 
   if (helpWindow && helpWindow.isDestroyed()) {
-    helpWindow = null;
+    helpWindow = null
   }
 
   helpWindow = new BrowserWindow({
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
-      width: 1200,
-      height: 800,
+    width: 1200,
+    height: 800,
     minWidth: 1000,
     minHeight: 700,
     resizable: true,
@@ -84,23 +127,26 @@ function createHelpWindow() {
     fullscreenable: true,
     titleBarStyle: 'default',
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false
     }
   })
-    if (VITE_DEV_SERVER_URL) {
-      helpWindow.loadURL(VITE_DEV_SERVER_URL + '#/help')
-    } else {
-      helpWindow.loadFile(path.join(RENDERER_DIST, 'index.html'))
+  
+  if (VITE_DEV_SERVER_URL) {
+    helpWindow.loadURL(VITE_DEV_SERVER_URL + '#/help')
+  } else {
+    helpWindow.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
 }
 
 ipcMain.on('open-main-window', () => {
-  createMainWindow();
-});
+  createMainWindow()
+})
 
 ipcMain.on('open-help-window', () => {
-  createHelpWindow();
-});
+  createHelpWindow()
+})
 
 function createLoginWindow() {
   loginWindow = new BrowserWindow({
@@ -115,11 +161,11 @@ function createLoginWindow() {
     hasShadow: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false
     },
   })
 
-  // loginWindow.webContents.openDevTools();
-  // Test active push message to Renderer-process.
   loginWindow.webContents.on('did-finish-load', () => {
     loginWindow?.webContents.send('main-process-message', (new Date).toLocaleString())
   })
@@ -127,14 +173,10 @@ function createLoginWindow() {
   if (VITE_DEV_SERVER_URL) {
     loginWindow.loadURL(VITE_DEV_SERVER_URL)
   } else {
-    // win.loadFile('dist/index.html')
     loginWindow.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
 }
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
@@ -143,12 +185,9 @@ app.on('window-all-closed', () => {
 })
 
 app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
     createLoginWindow()
   }
 })
 
 app.whenReady().then(createLoginWindow)
-

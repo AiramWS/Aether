@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import HomeButton from '../Buttons/Button';
-import { faSliders, faUniversalAccess, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSliders, faUniversalAccess, faUser, faFile } from '@fortawesome/free-solid-svg-icons';
 import UserSettings from '../Settings/UserSettings';
 import PreferencesSettings from '../Settings/PreferencesSettings';
 import AccesibilitySettings from '../Settings/AccesibilitySettings';
+import Informes from '../Settings/Informes';
 
 type SettingsPageProps = {
   onClose: () => void
@@ -12,7 +13,7 @@ type SettingsPageProps = {
 const SettingsPage = ({ onClose }: SettingsPageProps) => {
   const [isClosing, setIsClosing] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [activeTab, setActiveTab] = useState<'user' | 'preferences' | 'accesibility'>('user');
+  const [activeTab, setActiveTab] = useState<'user' | 'preferences' | 'accesibility' | 'informes'>('user');
 
   useEffect(() => {
     requestAnimationFrame(() => {
@@ -32,6 +33,8 @@ const SettingsPage = ({ onClose }: SettingsPageProps) => {
             return <PreferencesSettings/>
         case 'accesibility':
             return <AccesibilitySettings/>
+        case 'informes':
+            return <Informes/>
         default:
             return <UserSettings/>
     }
@@ -65,6 +68,11 @@ const SettingsPage = ({ onClose }: SettingsPageProps) => {
                     buttonText='Accesibilidad'
                     icon={faUniversalAccess}
                     onClick={() => setActiveTab('accesibility')}
+                />
+                <HomeButton
+                  buttonText='Informes'
+                  icon={faFile}
+                  onClick={() => setActiveTab('informes')}
                 />
             </div>
             <div className='display'>

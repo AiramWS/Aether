@@ -6,7 +6,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   },
   openHelpWindow: () => {
     ipcRenderer.send('open-help-window');
-  }
+  },
+  generatePDF: (html) => ipcRenderer.send('generate-pdf', html)
 });
 
 // "use strict";

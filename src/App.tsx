@@ -6,6 +6,7 @@ import Document from './components/Document/Document';
 import './App.css'
 import { useEffect } from 'react';
 import Help from './components/Help/Help';
+import { UsuarioProvider } from './context/UsuarioContext';
 
 function App() {
   useEffect(() => {
@@ -13,14 +14,16 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Sign />} />
-        <Route path="/homepage" element={<Homepage />} />
-        <Route path="/document" element={<Document/>}/>
-        <Route path="/help" element={<Help/>}/>
-      </Routes>
-    </Router>
+    <UsuarioProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Sign />} />
+          <Route path="/homepage" element={<Homepage />} />
+          <Route path="/document" element={<Document/>}/>
+          <Route path="/help" element={<Help/>}/>
+        </Routes>
+      </Router>
+    </UsuarioProvider>
   );
 }
 

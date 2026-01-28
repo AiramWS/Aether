@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Informe Usuario</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <div class="page">
+
+    <header>
+      <div>
+        <div class="title">Informe: <span id="user-name">Usuario</span></div>
+        <div class="subtitle">Resumen del perfil</div>
+      </div>
+      <div class="logo">
+        <img src="../../src/assets/appIcon.png" alt="Logo App"/>
+      </div>
+    </header>
+
+    <section>
+      <h2>Datos personales</h2>
+      <div class="card">
+        <div class="field">
+          <span class="label">Nombre</span>
+          <span class="value" id="field-name">Usuario</span>
+        </div>
+        <div class="field">
+          <span class="label">Correo</span>
+          <span class="value" id="field-email">usuario@email.com</span>
+        </div>
+        <div class="field">
+          <span class="label">Idioma</span>
+          <span class="value" id="field-language">Español</span>
+        </div>
+        <div class="field">
+          <span class="label">Autoguardado</span>
+          <span class="value" id="field-autosave">2 minutos</span>
+        </div>
+        <div class="field">
+          <span class="label">Avatar</span>
+          <span class="value">
+            <img id="field-avatar" src="" alt="Avatar usuario" class="avatar-img" />
+          </span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    function setUserData(user) {
+      document.getElementById('user-name').textContent = user.nombre || 'Usuario';
+      document.getElementById('field-name').textContent = user.nombre || 'Usuario';
+      document.getElementById('field-email').textContent = user.email || 'usuario@email.com';
+      document.getElementById('field-language').textContent = user.idioma || 'Español';
+      document.getElementById('field-autosave').textContent = user.autoGuardado || '2 minutos';
+      
+      const avatarImg = document.getElementById('field-avatar');
+      if (user.avatar) {
+        avatarImg.src = user.avatar;
+        avatarImg.style.display = 'inline-block';
+      } else {
+        avatarImg.style.display = 'none';
+      }
+    }
+  </script>
+
+</body>
+</html>

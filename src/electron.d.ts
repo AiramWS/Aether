@@ -1,11 +1,13 @@
-
-export interface ElectronAPI {
-  resizeToMainWindow: () => void;
+interface ElectronAPI {
+  generatePDF: (html: string) => void;
+  openMainWindow: () => void;
+  openHelpWindow: () => void;
 }
 
 declare global {
   interface Window {
-    electronAPI?: ElectronAPI;
+    electron: ElectronAPI;
+    electronAPI: ElectronAPI;
   }
 }
 

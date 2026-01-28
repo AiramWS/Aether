@@ -1,6 +1,7 @@
-import { ipcMain, app, BrowserWindow } from "electron";
+import { ipcMain, BrowserWindow, app, shell } from "electron";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
+import fs from "fs";
 import path from "node:path";
 createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -12,6 +13,35 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 
 let loginWindow;
 let mainWindow;
 let helpWindow;
+ipcMain.on("generate-pdf", async (event, html) => {
+  try {
+    console.log("Generando PDF...");
+    const win = new BrowserWindow({
+      show: false,
+      webPreferences: {
+        nodeIntegration: false,
+        contextIsolation: true
+      }
+    });
+    await win.loadURL(`data:text/html;charset=UTF-8,${encodeURIComponent(html)}`);
+    await new Promise((resolve) => setTimeout(resolve, 1e3));
+    const pdfBuffer = await win.webContents.printToPDF({
+      printBackground: true,
+      landscape: false,
+      pageSize: "A4"
+    });
+    const desktopPath = app.getPath("desktop");
+    const fileName = `informe_usuario_${Date.now()}.pdf`;
+    const filePath = path.join(desktopPath, fileName);
+    fs.writeFileSync(filePath, pdfBuffer);
+    console.log("PDF guardado en:", filePath);
+    shell.openPath(filePath);
+    win.close();
+    event.reply("pdf-generated", { success: true, filePath });
+  } catch (error) {
+    console.error("Error generando PDF:", error);
+  }
+});
 function createMainWindow() {
   mainWindow = new BrowserWindow({
     icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
@@ -25,7 +55,10 @@ function createMainWindow() {
     fullscreenable: true,
     titleBarStyle: "default",
     webPreferences: {
-      preload: path.join(__dirname, "preload.js")
+      preload: path.join(__dirname, "preload.js"),
+      // Asegúrate que apunte al compilado
+      contextIsolation: true,
+      nodeIntegration: false
     }
   });
   mainWindow.maximize();
@@ -61,7 +94,9 @@ function createHelpWindow() {
     fullscreenable: true,
     titleBarStyle: "default",
     webPreferences: {
-      preload: path.join(__dirname, "preload.js")
+      preload: path.join(__dirname, "preload.js"),
+      contextIsolation: true,
+      nodeIntegration: false
     }
   });
   if (VITE_DEV_SERVER_URL) {
@@ -88,7 +123,9 @@ function createLoginWindow() {
     titleBarStyle: "hidden",
     hasShadow: true,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js")
+      preload: path.join(__dirname, "preload.js"),
+      contextIsolation: true,
+      nodeIntegration: false
     }
   });
   loginWindow.webContents.on("did-finish-load", () => {
